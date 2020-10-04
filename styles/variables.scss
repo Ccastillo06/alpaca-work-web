@@ -1,0 +1,9 @@
+$black: #000000;
+$blue: #0070f3;
+$grey: #f4f4f4;
+
+@mixin tablet-up {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
