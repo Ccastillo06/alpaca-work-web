@@ -1,9 +1,10 @@
-import Layout from "../components/Layout";
+import Layout from '../components/Layout'
+import SearchBar from '../components/SearchBar'
 
 export default function Home() {
   return (
     <Layout>
-      Home page
+      <SearchBar />
     </Layout>
   )
 }

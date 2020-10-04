@@ -1,0 +1,31 @@
+@import '../../styles/variables.scss';
+
+.Navbar {
+  padding: 1rem;
+
+  border-bottom: 1px solid $blue;
+
+  -webkit-box-shadow: 0px 0px 28px -6px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 0px 28px -6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 28px -6px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  a {
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+    color: $blue;
+
+    h2 {
+      font-weight: bold;
+
+      padding-left: 1rem;
+    }
+  }
+
+  img {
+    max-width: 80px;
+  }
+}
