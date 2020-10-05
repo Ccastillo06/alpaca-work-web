@@ -1,0 +1,10 @@
+export const getSeconds = (ms) => Math.floor((ms / 1000) % 60)
+export const getMinutes = (ms) => Math.floor((ms / (1000 * 60)) % 60)
+export const getHours = (ms) => Math.floor((ms / (1000 * 60 * 60)) % 24)
+
+const getInDoubleDigits = (time) => (`${time}`.length === 1 ? `0${time}` : time)
+
+export const getTimeFromMs = (ms) =>
+  `${getInDoubleDigits(getHours(ms))}:${getInDoubleDigits(getMinutes(ms))}:${getInDoubleDigits(
+    getSeconds(ms)
+  )}`
