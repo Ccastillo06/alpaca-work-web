@@ -9,10 +9,12 @@ export default function Navbar() {
         <Link href="/">
           <a>
             <img src="/images/main-logo.png" alt="Sala del código image" />
-            <h2>SALA DE TRABAJO</h2>
+            <h1>Sala del Código</h1>
           </a>
         </Link>
       </nav>
+
+      <div className={styles.empty} />
     </header>
   )
 }
