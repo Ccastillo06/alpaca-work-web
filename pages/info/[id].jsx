@@ -1,11 +1,64 @@
-import Layout from '../../components/Layout'
+import { useMemo } from 'react'
+import format from 'date-fns/format'
+import subHours from 'date-fns/subHours'
+import getHours from 'date-fns/getHours'
+import getMinutes from 'date-fns/getMinutes'
+import getSeconds from 'date-fns/getSeconds'
 
 import { getWorkingSessionsFromUserParams } from '../../lib/firebase'
+import { getTimeFromMs } from '../../utils/date'
 
-export default function InfoPage({ id, sessions }) {
-  console.log(sessions)
+import Layout from '../../components/Layout'
+import DiscordInfo from '../../components/DiscordInfo'
+import HoursChart from '../../components/HoursChart'
 
-  return <Layout>User Info page with id {id}</Layout>
+export default function InfoPage({ sessions }) {
+  const formattedSessions = useMemo(
+    () =>
+      sessions.reduce((acc, next) => {
+        const { startTime, endTime, timeSpent } = next.data
+
+        return {
+          discordId: sessions[0].data.discordId,
+          username: sessions[0].data.username,
+          discriminator: sessions[0].data.discriminator,
+          workSessions: [
+            ...(acc.workSessions || []),
+            {
+              startDay: format(startTime, 'dd-MM-yyyy'),
+              startHour: format(startTime, 'HH:mm:ss'),
+              endDay: format(endTime, 'dd-MM-yyyy'),
+              endHour: format(endTime, 'HH:mm:ss'),
+              timeSpent: getTimeFromMs(timeSpent),
+              timeSpentInMs: timeSpent
+            }
+          ]
+        }
+      }, {}),
+    [sessions]
+  )
+
+  const graphSessions = useMemo(() =>
+    formattedSessions.workSessions.map(
+      (session) => ({
+        name: session.startDay,
+        timeSpent: session.timeSpent,
+        hours: getHours(subHours(session.timeSpentInMs, 1)),
+        minutes: getMinutes(session.timeSpentInMs), // / 1000 / 60 / 60).toFixed(2)
+        seconds: getSeconds(session.timeSpentInMs) // / 1000 / 60 / 60).toFixed(2)
+      }),
+      [formattedSessions]
+    )
+  )
+
+  const { discordId, username, discriminator } = formattedSessions
+
+  return (
+    <Layout>
+      <DiscordInfo discordId={discordId} username={username} discriminator={discriminator} />
+      <HoursChart graphSessions={graphSessions} />
+    </Layout>
+  )
 }
 
 // This page query can either be the user id or the username plus discord discriminator:
@@ -20,8 +73,7 @@ export async function getServerSideProps({ query }) {
 
   return {
     props: {
-      id: query.id,
-      sessions
+      sessions: sessions
     }
   }
 }

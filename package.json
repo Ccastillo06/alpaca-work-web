@@ -8,10 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "date-fns": "^2.16.1",
     "firebase-admin": "^9.2.0",
     "next": "9.5.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "recharts": "^1.8.5",
     "sass": "^1.26.11"
   },
   "devDependencies": {
