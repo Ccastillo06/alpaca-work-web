@@ -19,7 +19,6 @@ export default function Layout({ children }) {
       <Box as="main" flex="1" p="1rem">
         {children}
       </Box>
-      <footer>Footer</footer>
     </Flex>
   )
 }
