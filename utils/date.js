@@ -8,3 +8,9 @@ export const getTimeFromMs = (ms) =>
   `${getInDoubleDigits(getHours(ms))}:${getInDoubleDigits(getMinutes(ms))}:${getInDoubleDigits(
     getSeconds(ms)
   )}`
+
+export const getTimeDividedFromMs = (ms) => ({
+  hours: getHours(ms),
+  minutes: getMinutes(ms),
+  seconds: getSeconds(ms)
+})

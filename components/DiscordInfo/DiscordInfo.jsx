@@ -1,22 +1,27 @@
-import styles from './DiscordInfo.module.scss'
+import { Heading, Box, List, ListItem, ListIcon } from '@chakra-ui/core'
 
 export default function DiscordInfo({ username, discriminator, discordId }) {
   return (
-    <section>
-      <ul className={styles.list}>
-        <h2>Datos de Discord:</h2>
+    <Box as="section">
+      <Heading as="h2" size="lg" mb="1rem">
+        Datos de Discord:
+      </Heading>
 
-        <li>
-          <h3>
-            <span role="img">🧐</span> {username}#{discriminator}
-          </h3>
-        </li>
-        <li>
-          <h3>
-            <span role="img">🆔</span> {discordId}
-          </h3>
-        </li>
-      </ul>
-    </section>
+      <List>
+        <ListItem mb="1rem">
+          <Heading as="h3" size="md">
+            <ListIcon icon={() => <span role="img">🧐</span>} />{' '}
+            {username}#{discriminator}
+          </Heading>
+        </ListItem>
+
+        <ListItem>
+          <Heading as="h3" size="md">
+            <ListIcon icon={() => <span role="img">🆔</span>} />{' '}
+            {discordId}
+          </Heading>
+        </ListItem>
+      </List>
+    </Box>
   )
 }
