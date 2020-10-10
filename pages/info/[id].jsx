@@ -1,62 +1,22 @@
 import { useMemo } from 'react'
-import format from 'date-fns/format'
-import subHours from 'date-fns/subHours'
-import getHours from 'date-fns/getHours'
-import getMinutes from 'date-fns/getMinutes'
-import getSeconds from 'date-fns/getSeconds'
+import { Divider } from '@chakra-ui/core'
 
 import { getWorkingSessionsFromUserParams } from '../../lib/firebase'
-import { getTimeFromMs } from '../../utils/date'
+import { formatSessionsFromFirebase } from '../../utils/sessions'
 
 import Layout from '../../components/Layout'
 import DiscordInfo from '../../components/DiscordInfo'
-import HoursChart from '../../components/HoursChart'
+import GeneralHoursChart from '../../components/GeneralHoursChart'
 
-export default function InfoPage({ sessions }) {
-  const formattedSessions = useMemo(
-    () =>
-      sessions.reduce((acc, next) => {
-        const { startTime, endTime, timeSpent } = next.data
-
-        return {
-          discordId: sessions[0].data.discordId,
-          username: sessions[0].data.username,
-          discriminator: sessions[0].data.discriminator,
-          workSessions: [
-            ...(acc.workSessions || []),
-            {
-              startDay: format(startTime, 'dd-MM-yyyy'),
-              startHour: format(startTime, 'HH:mm:ss'),
-              endDay: format(endTime, 'dd-MM-yyyy'),
-              endHour: format(endTime, 'HH:mm:ss'),
-              timeSpent: getTimeFromMs(timeSpent),
-              timeSpentInMs: timeSpent
-            }
-          ]
-        }
-      }, {}),
-    [sessions]
-  )
-
-  const graphSessions = useMemo(() =>
-    formattedSessions.workSessions.map(
-      (session) => ({
-        name: session.startDay,
-        timeSpent: session.timeSpent,
-        hours: getHours(subHours(session.timeSpentInMs, 1)),
-        minutes: getMinutes(session.timeSpentInMs), // / 1000 / 60 / 60).toFixed(2)
-        seconds: getSeconds(session.timeSpentInMs) // / 1000 / 60 / 60).toFixed(2)
-      }),
-      [formattedSessions]
-    )
-  )
-
-  const { discordId, username, discriminator } = formattedSessions
+export default function InfoPage({ sessions = [] }) {
+  const userWorkWithSessions = useMemo(() => formatSessionsFromFirebase(sessions), [sessions])
+  const { discordId, username, discriminator, workSessions } = userWorkWithSessions
 
   return (
     <Layout>
       <DiscordInfo discordId={discordId} username={username} discriminator={discriminator} />
-      <HoursChart graphSessions={graphSessions} />
+      <Divider my="1rem" borderColor="brand.emerald" borderBottom="1px" />
+      <GeneralHoursChart workSessions={workSessions} />
     </Layout>
   )
 }
@@ -65,15 +25,23 @@ export default function InfoPage({ sessions }) {
 // query.id can be 337241225350173629
 // query.id can be My%20Username%231234 encoded which translates to My Username#1234
 export async function getServerSideProps({ query }) {
-  const userWorkingSessions = await getWorkingSessionsFromUserParams(query.id)
-  const sessions = userWorkingSessions.docs.map((doc) => ({
-    id: doc.id,
-    data: doc.data()
-  }))
+  try {
+    const userWorkingSessions = await getWorkingSessionsFromUserParams(query.id)
+    const sessions = userWorkingSessions.docs.map((doc) => ({
+      id: doc.id,
+      data: doc.data()
+    }))
 
-  return {
-    props: {
-      sessions: sessions
+    return {
+      props: {
+        sessions: sessions
+      }
+    }
+  } catch (err) {
+    return {
+      props: {
+        sessions: []
+      }
     }
   }
 }
