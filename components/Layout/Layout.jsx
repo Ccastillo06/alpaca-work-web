@@ -16,10 +16,9 @@ export default function Layout({ children }) {
       </Head>
 
       <Navbar />
-      <Box as="main" flex="1">
+      <Box as="main" flex="1" p="1rem">
         {children}
       </Box>
-      <footer>Footer</footer>
     </Flex>
   )
 }
