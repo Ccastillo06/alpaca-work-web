@@ -1,20 +1,25 @@
 import Head from 'next/head'
+import { Flex, Box } from '@chakra-ui/core'
 
 import Navbar from '../Navbar'
 
-import styles from './Layout.module.scss'
-
 export default function Layout({ children }) {
   return (
-    <div className={styles.container}>
+    <Flex h="100vh" flexDirection="column">
       <Head>
         <title>Alpaca Work Web</title>
         <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto+Mono&display=swap"
+          rel="stylesheet"
+        ></link>
       </Head>
 
       <Navbar />
-      <main className={styles.main}>{children}</main>
+      <Box as="main" flex="1">
+        {children}
+      </Box>
       <footer>Footer</footer>
-    </div>
+    </Flex>
   )
 }

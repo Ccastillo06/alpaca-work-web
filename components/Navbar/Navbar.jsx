@@ -1,20 +1,18 @@
-import Link from 'next/link'
+import { Link as NextLink } from 'next/link'
 
-import styles from './Navbar.module.scss'
+import { Box, Image, Link, Heading, Flex } from '@chakra-ui/core'
 
 export default function Navbar() {
   return (
-    <header className={styles.Navbar}>
-      <nav className={styles.logo}>
-        <Link href="/">
-          <a>
-            <img src="/images/main-logo.png" alt="Sala del código image" />
-            <h1>Sala del Código</h1>
-          </a>
+    <Box as="header" p="1rem">
+      <Flex w="50%" direction="row">
+        <Link as={NextLink} to="/" display="flex" alignItems="center">
+          <Image src="/images/main-logo.png" alt="Sala del código image" size="100px" />
+          <Heading as="h1" pl="1rem">
+            Sala del Código
+          </Heading>
         </Link>
-      </nav>
-
-      <div className={styles.empty} />
-    </header>
+      </Flex>
+    </Box>
   )
 }
