@@ -3,17 +3,17 @@ import { BarChart, Bar, XAxis, ResponsiveContainer, CartesianGrid, Tooltip, Lege
 import { Box, Heading } from '@chakra-ui/core'
 
 import NoSessions from './NoSessions'
-import { getSessionsStackedByDay } from '../../utils/sessions'
+import { getSessionsStackedBySubject } from '../utils/sessions'
 
-export default function GeneralHoursChart({ workSessions = [] }) {
-  const graphSessions = useMemo(() => getSessionsStackedByDay(workSessions), [workSessions])
-  console.log(graphSessions)
+export default function SubjectHoursChart({ workSessions = [] }) {
+  const graphSessions = useMemo(() => getSessionsStackedBySubject(workSessions), [workSessions])
+
   return (
     <Box>
       {graphSessions.length ? (
         <>
           <Heading textAlign="center" as="h3" size="md" pb="1rem">
-            Total de horas por día del mes
+            Total de horas por temática
           </Heading>
 
           <Box height="400px">

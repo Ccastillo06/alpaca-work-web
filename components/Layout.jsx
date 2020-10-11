@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Flex, Box } from '@chakra-ui/core'
 
-import Navbar from '../Navbar'
+import Navbar from './Navbar'
 
 export default function Layout({ children }) {
   return (

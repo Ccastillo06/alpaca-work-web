@@ -53,3 +53,23 @@ export const getSessionsStackedByDay = (workSessions) => {
     (a, b) => parse(a.name, 'dd-MM-yyyy', new Date()) - parse(b.name, 'dd-MM-yyyy', new Date())
   )
 }
+
+export const getSessionsStackedBySubject = (workSessions) => {
+  const unifiedSessionsBySubject = workSessions.reduce(
+    (acc, { subject, timeSpentInMs }) => ({
+      ...acc,
+      [subject]: timeSpentInMs + (acc[subject] || 0)
+    }),
+    {}
+  )
+
+  return [
+    ...Object.keys(unifiedSessionsBySubject).map((subjectKey) => ({
+      name: subjectKey || 'Sin tema',
+      time: getTimeFromMs(unifiedSessionsBySubject[subjectKey]),
+      ...getTimeDividedFromMs(unifiedSessionsBySubject[subjectKey])
+    }))
+  ].sort(
+    (a, b) => parse(a.name, 'dd-MM-yyyy', new Date()) - parse(b.name, 'dd-MM-yyyy', new Date())
+  )
+}
