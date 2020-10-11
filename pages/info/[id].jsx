@@ -1,12 +1,19 @@
 import { useMemo } from 'react'
-import { Divider } from '@chakra-ui/core'
+import { Divider, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/core'
 
 import { getWorkingSessionsFromUserParams } from '../../lib/firebase'
 import { formatSessionsFromFirebase } from '../../utils/sessions'
 
+import Table from '../../components/Table'
 import Layout from '../../components/Layout'
 import DiscordInfo from '../../components/DiscordInfo'
 import GeneralHoursChart from '../../components/GeneralHoursChart'
+import SubjectHoursChart from '../../components/SubjectHoursChart'
+
+const graphTabs = {
+  'Horas por día': GeneralHoursChart,
+  'Horas por temática': SubjectHoursChart
+}
 
 export default function InfoPage({ sessions = [] }) {
   const userWorkWithSessions = useMemo(() => formatSessionsFromFirebase(sessions), [sessions])
@@ -15,8 +22,36 @@ export default function InfoPage({ sessions = [] }) {
   return (
     <Layout>
       <DiscordInfo discordId={discordId} username={username} discriminator={discriminator} />
-      <Divider my="1rem" borderColor="brand.emerald" borderBottom="1px" />
-      <GeneralHoursChart workSessions={workSessions} />
+
+      <Divider my={['1rem', '2rem']} borderColor="brand.emeraldLight" borderBottom="1px" />
+
+      <Tabs variant="enclosed" borderColor="brand.emeraldLight">
+        <TabList>
+          {Object.keys(graphTabs).map((title) => (
+            <Tab key={title}>{title}</Tab>
+          ))}
+        </TabList>
+
+        <TabPanels>
+          {Object.keys(graphTabs).map((title) => {
+            const Component = graphTabs[title]
+
+            return (
+              <TabPanel key={title} paddingTop="2rem">
+                <Component workSessions={workSessions} />
+              </TabPanel>
+            )
+          })}
+        </TabPanels>
+      </Tabs>
+
+      {workSessions.length ? (
+        <>
+          <Divider my={['1rem', '2rem']} borderColor="brand.emeraldLight" borderBottom="1px" />
+
+          <Table workSessions={workSessions} />
+        </>
+      ) : null}
     </Layout>
   )
 }

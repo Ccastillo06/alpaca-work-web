@@ -12,6 +12,7 @@ const customTheme = {
     brand: {
       blue: '#264653',
       emerald: '#2A9D8F',
+      emeraldLight: '#2a9d9061',
       cream: '#E9C46A',
       lightPeach: '#F4A261',
       darkPeach: '#E76F51'
