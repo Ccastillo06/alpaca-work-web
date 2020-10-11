@@ -11,7 +11,7 @@ export default function Navbar() {
             <Image
               src="/images/main-logo.png"
               alt="Sala del código image"
-              size={['60px', '100px']}
+              size={'60px'}
             />
             <Heading as="h1" pl="1rem" fontSize={['xl', '2xl']}>
               Sala del Código

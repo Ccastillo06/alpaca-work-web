@@ -1,58 +1,91 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { Flex, Heading, Button, Code } from '@chakra-ui/core'
-import { FormControl, FormLabel, FormErrorMessage, FormHelperText, Input } from '@chakra-ui/core'
+import {
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  Input,
+  Flex,
+  Heading,
+  Button,
+  Code,
+  FormErrorMessage,
+  Box
+} from '@chakra-ui/core'
 
 export default function SearchBar() {
   const router = useRouter()
-  const [searchState, setSearchState] = useState('')
+  const [formErrors, setFormErrors] = useState({
+    discordId: ''
+  })
+  const [formState, setFormState] = useState({
+    discordId: ''
+  })
 
   function handleInputChange(ev) {
-    const value = ev.target.value
-    setSearchState(value)
+    const { id, value } = ev.target
+
+    setFormState({
+      ...formState,
+      [id]: value
+    })
   }
+
+  const { discordId } = formState
 
   function handleSearch(ev) {
     ev.preventDefault()
-    console.log('i work', searchState)
-    router.push(`/info/${searchState}`)
-  }
 
+    const cleanDiscordId = discordId.trim()
+
+    if (cleanDiscordId) {
+      if (cleanDiscordId.includes('#')) {
+        const encoded = encodeURI(cleanDiscordId).replace('#', '%23')
+        router.push(`/info/${encoded}`)
+      } else {
+        router.push(`/info/${cleanDiscordId}`)
+      }
+    } else {
+      setFormErrors({ discordId: '¡No puedes enviar valores vacíos en este campo 🚨!' })
+    }
+  }
+  console.log(formErrors)
   return (
-    <Flex flexDirection="column" alignItems="center" pt="4rem">
-      <Heading as="h3" size="md" mb="1rem">
-        Ver mis gráficos.
+    <Box pt="4rem">
+      <Heading textAlign="center" as="h3" size="md" mb="1rem">
+        Ver mis gráficos 🧐
       </Heading>
 
-      <Flex alignItems="center" flexWrap="wrap" justifyContent={['center']}>
-        <FormControl>
-          <FormLabel htmlFor="id">Discord Id:</FormLabel>
+      <Flex
+        as="form"
+        onSubmit={handleSearch}
+        flexDirection="column"
+        alignItems="center"
+        flexWrap="wrap"
+        justifyContent={['center']}
+      >
+        <FormControl isInvalid={Boolean(formErrors.discordId)} isRequired>
+          <FormLabel fontWeight="bold" htmlFor="discordId">Discord id o username#código:</FormLabel>
           <Input
             type="text"
             id="discordId"
-            isRequired
-            placeholder="Discord Id"
-            value={searchState}
+            placeholder="647126721243251739 o MyName#1234"
+            minLength="6"
+            value={discordId}
             onChange={handleInputChange}
           />
-          <FormErrorMessage>
-            Introduce <b>!!me</b> en discord y pega en el formulario tu <b>Discord Id</b> 😅
-          </FormErrorMessage>
-          <FormHelperText id="id-helper-text">
+          <FormErrorMessage id="discordId-error-message">{formErrors.discordId}</FormErrorMessage>
+          <FormHelperText id="discordId-helper-text">
             Puedes usar el comando <Code>!!me</Code> en el canal <Code>#bots-commands</Code> para
-            saber tu <b>id de Discord</b>
+            saber tu <b>id</b> o <b>username y código</b> de Discord.
           </FormHelperText>
         </FormControl>
-        <Button
-          variantColor="teal"
-          variant="ghost"
-          mt={['1rem', 0]}
-          onClick={(ev) => handleSearch(ev)}
-        >
+
+        <Button type="submit" variantColor="teal" variant="ghost" mt={['1rem']}>
           ¡Vamos!
         </Button>
       </Flex>
-    </Flex>
+    </Box>
   )
 }

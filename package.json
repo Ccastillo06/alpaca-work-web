@@ -17,8 +17,7 @@
     "next": "9.5.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "recharts": "^1.8.5",
-    "sass": "^1.26.11"
+    "recharts": "^1.8.5"
   },
   "devDependencies": {
     "eslint": "^7.10.0",
