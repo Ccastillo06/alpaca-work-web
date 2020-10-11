@@ -15,7 +15,6 @@ export default function SubjectHoursChart({ workSessions = [] }) {
           <Heading textAlign="center" as="h3" size="md" pb="1rem">
             Total de horas por temática
           </Heading>
-
           <Box height="400px">
             <ResponsiveContainer>
               <BarChart data={graphSessions}>

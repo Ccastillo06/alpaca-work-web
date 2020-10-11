@@ -4,6 +4,7 @@ import { Divider, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/cor
 import { getWorkingSessionsFromUserParams } from '../../lib/firebase'
 import { formatSessionsFromFirebase } from '../../utils/sessions'
 
+import Table from '../../components/Table'
 import Layout from '../../components/Layout'
 import DiscordInfo from '../../components/DiscordInfo'
 import GeneralHoursChart from '../../components/GeneralHoursChart'
@@ -21,9 +22,10 @@ export default function InfoPage({ sessions = [] }) {
   return (
     <Layout>
       <DiscordInfo discordId={discordId} username={username} discriminator={discriminator} />
-      <Divider my="1rem" borderColor="brand.emerald" borderBottom="1px" />
 
-      <Tabs variant="enclosed">
+      <Divider my={['1rem', '2rem']} borderColor="brand.emeraldLight" borderBottom="1px" />
+
+      <Tabs variant="enclosed" borderColor="brand.emeraldLight">
         <TabList>
           {Object.keys(graphTabs).map((title) => (
             <Tab key={title}>{title}</Tab>
@@ -35,13 +37,21 @@ export default function InfoPage({ sessions = [] }) {
             const Component = graphTabs[title]
 
             return (
-              <TabPanel key={title} py="1rem">
+              <TabPanel key={title} paddingTop="2rem">
                 <Component workSessions={workSessions} />
               </TabPanel>
             )
           })}
         </TabPanels>
       </Tabs>
+
+      {workSessions.length ? (
+        <>
+          <Divider my={['1rem', '2rem']} borderColor="brand.emeraldLight" borderBottom="1px" />
+
+          <Table workSessions={workSessions} />
+        </>
+      ) : null}
     </Layout>
   )
 }

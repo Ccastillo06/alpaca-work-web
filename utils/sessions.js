@@ -1,7 +1,7 @@
 import format from 'date-fns/format'
 import parse from 'date-fns/parse'
 
-import { getTimeDividedFromMs, getTimeFromMs } from './date'
+import { getTimeDividedFromMs, getTimeFromMs, parseDateToCommon } from './date'
 
 /**
  * Receives an array of sessions from a Firebase query consisting on sessions objects
@@ -28,7 +28,9 @@ export const formatSessionsFromFirebase = (sessions = []) =>
           endDay: format(endTime, 'dd-MM-yyyy'),
           endHour: format(endTime, 'HH:mm:ss'),
           timeSpent: getTimeFromMs(timeSpent),
-          timeSpentInMs: timeSpent
+          timeSpentInMs: timeSpent,
+          startTimeInMs: startTime,
+          endTimeInMs: endTime
         }
       ]
     }
@@ -49,9 +51,7 @@ export const getSessionsStackedByDay = (workSessions) => {
       time: getTimeFromMs(unifiedSessionsByDay[dayKey]),
       ...getTimeDividedFromMs(unifiedSessionsByDay[dayKey])
     }))
-  ].sort(
-    (a, b) => parse(a.name, 'dd-MM-yyyy', new Date()) - parse(b.name, 'dd-MM-yyyy', new Date())
-  )
+  ].sort((a, b) => parseDateToCommon(a.name) - parseDateToCommon(b.name))
 }
 
 export const getSessionsStackedBySubject = (workSessions) => {
@@ -69,7 +69,10 @@ export const getSessionsStackedBySubject = (workSessions) => {
       time: getTimeFromMs(unifiedSessionsBySubject[subjectKey]),
       ...getTimeDividedFromMs(unifiedSessionsBySubject[subjectKey])
     }))
-  ].sort(
-    (a, b) => parse(a.name, 'dd-MM-yyyy', new Date()) - parse(b.name, 'dd-MM-yyyy', new Date())
-  )
+  ].sort((a, b) => parseDateToCommon(a.name) - parseDateToCommon(b.name))
 }
+
+export const sortWorkSessions = (workSessions) =>
+  workSessions
+    .sort((a, b) => parseDateToCommon(a.startDay) - parseDateToCommon(b.startDay))
+    .sort((a, b) => a.startTimeInMs - b.startTimeInMs)
