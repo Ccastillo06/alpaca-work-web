@@ -7,12 +7,17 @@ export default function Layout({ children }) {
   return (
     <Flex h="100vh" flexDirection="column">
       <Head>
-        <title>Alpaca Work Web</title>
+        <title>Sala del Código</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto+Mono&display=swap"
           rel="stylesheet"
         />
+
+        <meta property="og:title" content="Sala del Código" />
+        <meta property="og:description" content="Panel de usuario de la Sala del Código" />
+        <meta property="og:url" content="https://saladelcodigo.vercel.app" />
+        <meta property="og:image" content="/images/main-logo.png" />
       </Head>
 
       <Navbar />
