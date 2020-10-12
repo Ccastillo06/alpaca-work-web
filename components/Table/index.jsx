@@ -46,7 +46,7 @@ export default function Table({ workSessions = [] }) {
       },
       {
         text: '⏪',
-        onClick: () => setPage((page) => page - 1),
+        onClick: () => setPage(page - 1),
         disabled: page === 1
       },
       {
@@ -55,7 +55,7 @@ export default function Table({ workSessions = [] }) {
       },
       {
         text: '⏩',
-        onClick: () => setPage((page) => page + 1),
+        onClick: () => setPage(page + 1),
         disabled: page === totalPages
       },
       {
@@ -64,7 +64,7 @@ export default function Table({ workSessions = [] }) {
         disabled: page === totalPages
       }
     ],
-    []
+    [page]
   )
 
   return (
