@@ -37,32 +37,35 @@ export default function Table({ workSessions = [] }) {
     [orderedTableSessions, page]
   )
 
-  const pagination = [
-    {
-      text: '⏮',
-      onClick: () => setPage(1),
-      disabled: page === 1
-    },
-    {
-      text: '⏪',
-      onClick: () => setPage(page - 1),
-      disabled: page === 1
-    },
-    {
-      type: 'heading',
-      text: `Página ${page}/${totalPages}`
-    },
-    {
-      text: '⏩',
-      onClick: () => setPage(page + 1),
-      disabled: page === totalPages
-    },
-    {
-      text: '⏭',
-      onClick: () => setPage(totalPages),
-      disabled: page === totalPages
-    }
-  ]
+  const pagination = useMemo(
+    () => [
+      {
+        text: '⏮',
+        onClick: () => setPage(1),
+        disabled: page === 1
+      },
+      {
+        text: '⏪',
+        onClick: () => setPage((page) => page - 1),
+        disabled: page === 1
+      },
+      {
+        type: 'heading',
+        text: `Página ${page}/${totalPages}`
+      },
+      {
+        text: '⏩',
+        onClick: () => setPage((page) => page + 1),
+        disabled: page === totalPages
+      },
+      {
+        text: '⏭',
+        onClick: () => setPage(totalPages),
+        disabled: page === totalPages
+      }
+    ],
+    []
+  )
 
   return (
     <Box overflowX="auto">
