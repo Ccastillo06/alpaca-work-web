@@ -12,7 +12,7 @@ export default function Layout({ children }) {
         <link
           href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto+Mono&display=swap"
           rel="stylesheet"
-        ></link>
+        />
       </Head>
 
       <Navbar />
