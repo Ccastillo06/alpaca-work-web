@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/core'
+import { Box, Flex } from '@chakra-ui/core'
 
 export function Container(props) {
   return (
@@ -42,4 +42,8 @@ export function TableHeader(props) {
 
 export function TableRow(props) {
   return <Box as="tr" {...props} />
+}
+
+export function TableAddedRow(props) {
+  return <Flex p="1rem" alignItems="center" justifyContent="center" {...props} />
 }

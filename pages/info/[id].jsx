@@ -1,18 +1,27 @@
 import { useMemo } from 'react'
+import dynamic from 'next/dynamic'
 import { Divider, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/core'
 
 import { getWorkingSessionsFromUserParams } from '../../lib/firebase'
 import { formatSessionsFromFirebase } from '../../utils/sessions'
 
-import Table from '../../components/Table'
 import Layout from '../../components/Layout'
+import LoadingBar from '../../components/LoadingBar'
 import DiscordInfo from '../../components/DiscordInfo'
-import GeneralHoursChart from '../../components/GeneralHoursChart'
-import SubjectHoursChart from '../../components/SubjectHoursChart'
+
+const DynamicGeneralHoursChart = dynamic(() => import('../../components/GeneralHoursChart'), {
+  loading: LoadingBar
+})
+const DynamicSubjectHoursChart = dynamic(() => import('../../components/SubjectHoursChart'), {
+  loading: LoadingBar
+})
+const DynamicTable = dynamic(() => import('../../components/Table'), {
+  loading: LoadingBar
+})
 
 const graphTabs = {
-  'Horas por día': GeneralHoursChart,
-  'Horas por temática': SubjectHoursChart
+  'Horas por día': DynamicGeneralHoursChart,
+  'Horas por temática': DynamicSubjectHoursChart
 }
 
 export default function InfoPage({ sessions = [] }) {
@@ -45,11 +54,11 @@ export default function InfoPage({ sessions = [] }) {
         </TabPanels>
       </Tabs>
 
-      {workSessions.length ? (
+      {(workSessions || []).length ? (
         <>
           <Divider my={['1rem', '2rem']} borderColor="brand.emeraldLight" borderBottom="1px" />
 
-          <Table workSessions={workSessions} />
+          <DynamicTable workSessions={workSessions} />
         </>
       ) : null}
     </Layout>
