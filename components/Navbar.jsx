@@ -9,7 +9,7 @@ export default function Navbar() {
 
   async function handleBotButtonClick() {
     try {
-      const response = await fetch('https://discord-alpaca-work-bot.herokuapp.com/')
+      const response = await fetch(process.env.NEXT_PUBLIC_ALPACA_BOT_URL)
       const json = await response.json()
 
       if (json.data) {
