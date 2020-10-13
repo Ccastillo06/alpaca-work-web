@@ -22,6 +22,7 @@ export const formatSessionsFromFirebase = (sessions = []) =>
       workSessions: [
         ...(acc.workSessions || []),
         {
+          id: next.id,
           subject,
           startDay: format(startTime, 'dd-MM-yyyy'),
           startHour: format(startTime, 'HH:mm:ss'),

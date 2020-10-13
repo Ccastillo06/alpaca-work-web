@@ -45,5 +45,7 @@ export function TableRow(props) {
 }
 
 export function TableAddedRow(props) {
-  return <Flex p="1rem" alignItems="center" justifyContent="center" {...props} />
+  return (
+    <Flex py="1rem" alignItems="center" justifyContent="space-between" flexWrap="wrap" {...props} />
+  )
 }
