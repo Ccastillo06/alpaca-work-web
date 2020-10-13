@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Box, Heading, Text } from '@chakra-ui/core'
+import { Box, Heading, Text, Flex } from '@chakra-ui/core'
 
 import { Container, TableHead, TableRow, TableHeader, TableBody, TableCell } from './Structure'
 import { sortWorkSessions } from '../../utils/sessions'
@@ -82,7 +82,13 @@ export default function Table({ workSessions = [] }) {
                   keyToTitle[key] ? (
                     <TableCell key={key}>
                       {key === 'id' ? (
-                        <CopyButton value={session[key]} />
+                        <Flex alignItems="center">
+                          <CopyButton value={session[key]} marginRight="0.5rem" />
+
+                          <Text fontWeight={j ? 'regular' : 'bold'} fontSize="sm">
+                            {session[key]}
+                          </Text>
+                        </Flex>
                       ) : (
                         <Text fontWeight={j ? 'regular' : 'bold'} fontSize="sm">
                           {session[key] || '-'}
