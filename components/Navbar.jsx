@@ -18,8 +18,8 @@ export default function Navbar() {
           title: '¡Despierto!',
           description: '¡Nos vemos en Discord! 😄',
           status: 'success',
-          duration: 5000,
-          isClosable: true
+          isClosable: true,
+          duration: 5000
         })
       }
     } catch (err) {
@@ -27,8 +27,8 @@ export default function Navbar() {
         title: 'Ups...',
         description: 'No hemos podido despertar a Alpaca Bot 😅.',
         status: 'error',
-        duration: 5000,
-        isClosable: true
+        isClosable: true,
+        duration: 5000
       })
     }
   }
