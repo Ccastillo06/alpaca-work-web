@@ -1,7 +1,9 @@
 import { useMemo } from 'react'
-import { Heading, Button, Select, Flex } from '@chakra-ui/core'
+import { Heading, Button, Select, Flex, useColorMode } from '@chakra-ui/core'
 
 import { TableAddedRow } from './Structure'
+
+import theme from '../../theme'
 
 export default function Pagination({
   page,
@@ -41,9 +43,12 @@ export default function Pagination({
     [page, totalPages]
   )
 
+  const { colorMode } = useColorMode();
+
   return (
     <TableAddedRow>
       <Select
+        backgroundColor={theme.colors[colorMode].inputBackground}
         marginBottom={['1rem', '0']}
         flexBasis={['100%', '40%']}
         placeholder="Filtra por un tema"
