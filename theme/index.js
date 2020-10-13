@@ -16,6 +16,18 @@ const customTheme = {
       cream: '#E9C46A',
       lightPeach: '#F4A261',
       darkPeach: '#E76F51'
+    },
+    light: {
+      inputText: '#000000',
+      inputBackground: '#ededed',
+      tableText: '#000000',
+      tableHeaderBackground: '#E59500',
+    },
+    dark: {
+      inputText: '#FFFFFF',
+      inputBackground: '#2A9D8F',
+      tableText: '#FFFFFF',
+      tableHeaderBackground: '#2A9D8F',
     }
   }
 }
