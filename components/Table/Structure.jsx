@@ -1,4 +1,6 @@
-import { Box, Flex } from '@chakra-ui/core'
+import { Box, Flex, useColorMode } from '@chakra-ui/core'
+
+import theme from '../../theme'
 
 export function Container(props) {
   return (
@@ -21,6 +23,7 @@ export function TableHead(props) {
 }
 
 export function TableHeader(props) {
+  const { colorMode } = useColorMode();
   return (
     <Box
       as="th"
@@ -35,6 +38,7 @@ export function TableHeader(props) {
       letterSpacing="wider"
       lineHeight="1rem"
       fontWeight="medium"
+      bg={theme.colors[colorMode].tableHeaderBackground}
       {...props}
     />
   )

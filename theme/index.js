@@ -20,14 +20,14 @@ const customTheme = {
     light: {
       inputText: '#000000',
       inputBackground: '#ededed',
-      tableText: '',
-      tableBackground: '',
+      tableText: '#000000',
+      tableHeaderBackground: '#E59500',
     },
     dark: {
-      inputText: '#000000',
+      inputText: '#FFFFFF',
       inputBackground: '#2A9D8F',
-      tableText: '',
-      tableBackground: '',
+      tableText: '#FFFFFF',
+      tableHeaderBackground: '#2A9D8F',
     }
   }
 }
