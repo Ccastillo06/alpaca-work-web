@@ -50,9 +50,9 @@ export default function SearchBar() {
       setFormErrors({ discordId: '¡No puedes enviar valores vacíos en este campo 🚨!' })
     }
   }
-  console.log(formErrors)
+  
   return (
-    <Box pt="4rem">
+    <Box pt={['2rem', '8rem']}>
       <Heading textAlign="center" as="h3" size="md" mb="1rem">
         Ver mis gráficos 🧐
       </Heading>
@@ -66,7 +66,9 @@ export default function SearchBar() {
         justifyContent={['center']}
       >
         <FormControl isInvalid={Boolean(formErrors.discordId)} isRequired>
-          <FormLabel fontWeight="bold" htmlFor="discordId">Discord id o username#código:</FormLabel>
+          <FormLabel fontWeight="bold" htmlFor="discordId">
+            Discord id o username#código:
+          </FormLabel>
           <Input
             type="text"
             id="discordId"
